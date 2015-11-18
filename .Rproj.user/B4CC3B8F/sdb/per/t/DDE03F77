@@ -1,0 +1,17 @@
+{
+    "contents" : "\nlibrary(RJSONIO)\n\n#importing data\njson_file=\"uber_data_challenge.json\"\nuber_data<-fromJSON(json_file)\n\n#forcing data into data frame\nuber_unlist=data.frame()\nfor (i in 1:length(uber_data)){\n  sub_df=data.frame(t(data.frame(unlist(uber_data[[i]]))))\n  if (i==1){\n    uber_unlist=sub_df\n  } else {\n    uber_unlist=rbind.all.columns(uber_unlist,sub_df)\n  }\n  \n}\n\nsave(uber_unlist,file=\"uber_test_data.rda\")\n\n\n\n\nrbind.all.columns <- function(x, y) {\n  #only works on data frames\n  x.diff <- setdiff(colnames(x), colnames(y))\n  y.diff <- setdiff(colnames(y), colnames(x))\n  if (!is.null(x)){\n    if (length(y.diff)>0 & dim(x)[2]>0) {\n      x[, c(as.character(y.diff))] <- NA\n    }\n    \n    if (length(x.diff)>0 & dim(x)[2]>0) {\n      y[, c(as.character(x.diff))] <- NA\n    }\n  }\n  \n  return(rbind(x,y))\n  \n  \n} #end of function rbind.all.columns\n\n",
+    "created" : 1446423505396.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1159518522",
+    "id" : "DDE03F77",
+    "lastKnownWriteTime" : 1446423361,
+    "path" : "~/Uber Test/uber_data_munge.R",
+    "project_path" : "uber_data_munge.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

@@ -1,0 +1,38 @@
+1.
+
+SELECT COUNT(CASE WHEN status IN ('cancelled_by_driver','cancelled_by_client') THEN 1 END)/COUNT(*) AS daily_city_completion_percent, date, city_id
+FROM (
+	SELECT status, DATE(request_at) AS date, city_id
+	FROM trips
+	WHERE request_at BETWEEN ('2013/10/01 03:00:00','2013/10/22 10:00:00') 
+		AND client_id IN (
+							SELECT userid
+							FROM users
+							WHERE role == 'client' AND banned == 0
+						)
+	 )
+GROUP BY date, city_id
+;
+
+
+2.
+SELECT completed_trips, driver_id, week
+FROM (
+		SELECT COUNT(*) AS completed_trips, driver_id, week, row_number() OVER (PARTITION BY driver_id, week) AS rownum
+		FROM (
+			SELECT WEEK(request_at) AS week, driver_id
+			FROM trips
+			WHERE  request_at BETWEEN ('2013/06/03 00:00:00','2013/06/25 00:00:00') 
+					AND driver_id IN (
+								SELECT userid
+								FROM users
+								WHERE role == 'driver'
+								)
+					AND city_id IN ('1','6','12')
+					AND status IN ('completed')
+			)
+		GROUP BY driver_id, week
+		ORDER BY completed_trips DESC
+	)
+WHERE rownum <4
+;

@@ -1,0 +1,25 @@
+{
+    "contents" : "",
+    "created" : 1446518313860.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "884CA2F3",
+    "lastKnownWriteTime" : 7011605692497750387,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "t7q0yff6vc",
+        "caption" : "suite_people",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=suite_people&cache_key=t7q0yff6vc",
+        "displayedObservations" : "1382",
+        "environment" : "",
+        "object" : "suite_people",
+        "totalObservations" : "1382",
+        "variables" : "12"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}

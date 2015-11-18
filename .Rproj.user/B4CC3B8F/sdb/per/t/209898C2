@@ -1,0 +1,18 @@
+{
+    "contents" : "library(dplyr)\nlibrary(tidyr)\nlibrary(lubridate)\nlibrary(rpart)\nlibrary(randomForest)\nlibrary(MASS)\nlibrary(zoo)\nlibrary(caret)\nlibrary(pander)\n\n# load(file=\"uber_test_data.rda\")\n\ndata=tbl_df(uber_unlist)\ndata$trips_in_first_30_days=as.numeric(as.character(data$trips_in_first_30_days))\ndata$signup_date=as.Date(data$signup_date)\ndata$avg_rating_of_driver=as.numeric(as.character(data$avg_rating_of_driver))\ndata$avg_surge=as.numeric(as.character(data$avg_surge))\ndata$last_trip_date=as.Date(data$last_trip_date)\ndata$surge_pct=as.numeric(as.character(data$surge_pct))\ndata$weekday_pct=as.numeric(as.character(data$weekday_pct))\ndata$avg_dist=as.numeric(as.character(data$avg_dist))\ndata$avg_rating_by_driver=as.numeric(as.character(data$avg_rating_by_driver))\n\n\nnumeric_data_inds=sapply(data,is.numeric)\ncat_data_inds=!sapply(data,is.numeric)\n\n#tabulations of categorical data\npander(data %>% group_by(city) %>% summarise(Count=n()))\npander(data %>% group_by(phone) %>% summarise(Count=n()))\npander(data %>% group_by(uber_black_user) %>% summarise(Count=n()))\n\n#generating retained variable\ndata$retained=0\ndata$retained[which(data$trips_in_first_30_days>0)]=1\nmean(data$retained,na.rm=TRUE)\n\ndata$retained=as.factor(data$retained)\ndata %>% group_by(retained) %>% summarise(Count=n())\n\n\n#numeric exploration\n\nsummary(data[,numeric_data_inds])\n\n\n#covariates\ncovariates=c(\"city\",\"phone\",\"uber_black_user\",\"avg_rating_of_driver\",\n             \"avg_surge\",\"surge_pct\",\"weekday_pct\",\"avg_dist\",\"avg_rating_by_driver\")\n\n\n\n\n\n\n",
+    "created" : 1446423354099.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3592461447",
+    "id" : "209898C2",
+    "lastKnownWriteTime" : 1446433875,
+    "path" : "~/Uber Test/analysis_scratch.R",
+    "project_path" : "analysis_scratch.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
